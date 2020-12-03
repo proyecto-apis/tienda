@@ -1,0 +1,6 @@
+<p>Tienes <span th:text="${size}"></span> artículos en tu caro.</p>
+<p>Total <span th:text="'$' + ${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'POINT')}"></span>.</p>
+<p>
+    <a href="/cart/view" class="btn btn-success">Ver carro</a>
+    <a href="/cart/clear" class="btn btn-danger float-right">Vacíar carro</a>
+</p>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="/fragments/head"></head>
+
+<body>
+
+    <nav th:replace="/fragments/nav :: nav-admin"></nav>
+
+    <div class="container">
+
+        <h1 class="display-2">Agregar un producto</h1>
+        <a href="/admin/products" class="btn btn-primary mb-5">Regresar a productos</a>
+
+        <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></div>
+
+        <form method="post" th:object="${product}" th:action="@{/admin/products/add}" enctype="multipart/form-data">
+
+            <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                ¡Hay errores!
+            </div>
+        
+            <div class="form-group">
+                <label for="">Nombre:</label>
+                <input type="text" class="form-control" th:field="*{name}" placeholder="Nombre">
+                <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="">Descripción:</label>
+                <textarea th:field="*{description}" rows="10" class="form-control" placeholder="Descripción"></textarea>
+                <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="">Imagen:</label>
+                <input type="file" class="form-control" th:name="file" th:id="file">
+                <img class="mt-2" src="#" alt="" id="imgPreview1">
+            </div>
+
+            <div class="form-group">
+                <label for="">Precio:</label>
+                <input type="text" class="form-control" th:field="*{price}" placeholder="20 o 20.99">
+                <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="">Categoría:</label>
+                <select th:field="*{categoryId}" class="form-control">
+                    <option th:value="0">Seleccionar una categoría</option>
+                    <option th:each="cat: ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                </select>
+                <span class="error" th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}"></span>
+            </div>
+
+            <button class="btn btn-danger mb-5">Agregar</button>
+
+        </form>
+
+    </div>
+
+    <div th:replace="/fragments/footer"></div>
+
+    <script>
+
+    $(function () {
+
+        $("#file").change(function () {
+            readURL(this, '1');
+        });
+
+    });
+
+    </script>
+
+</body>
+
+</html>
